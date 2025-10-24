@@ -42,6 +42,7 @@
         gap: 5px;
       }
       .weapons button {
+        cursor: pointer;
         font-size: 1rem;
         text-align: center;
         color: #fff;
@@ -55,18 +56,22 @@
       .weapons button:nth-child(3) {
         background-color: green;
       }
+      #A1.disable, #A2.disable, #A3.disable, #B1.disable, #B2.disable, #B3.disable {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: default;
+      }
     </style>
 </head>
 <body>
     <h1>Rock Paper Scissor</h1>
-    <h2 id="winnerTitle">Select Weapon Player A:</h2>
+    <h2 id="winnerTitle"></h2>
     <div class="container">
         <div id="playerOne">
             <h4>Player A</h4>
             <div class="weapons">
             <button id = "A1" value="rock">Rock</button><button id = "A2" value="scissor">Scissor</button><button id = "A3" value="paper">Paper</button>
             </div>
-            <h3 id="card1"></h3>
         </div>
 
         <div id="playerTwo">
@@ -74,17 +79,18 @@
             <div class="weapons">
             <button id = "B1" value="rock">Rock</button><button id = "B2" value="scissor">Scissor</button><button id = "B3" value="paper">Paper</button>
             </div>
-            <h3 id="card2"></h3>
         </div>
     </div>
         <button id="result">Who's Winner?</button>
-
+        <button id="new">New Game</button>
     <script>
       let result = document.getElementById("result");
       let card1 = document.getElementById("card1");
       let card2 = document.getElementById("card2");
       let winnerTitle = document.getElementById("winnerTitle");
+      winnerTitle.textContent = "Select Weapon Player A";
       let playerA, playerB, winner;
+      let currentPlayer = "A";
 
       let A1 = document.getElementById("A1");
       let A2 = document.getElementById("A2");
@@ -95,58 +101,46 @@
 
       A1.addEventListener("click", () => {
         playerA = A1.value;
+        currentPlayer = "B"
+        disableAbuttons()
         winnerTitle.textContent = "Player B It's Ur Turn";
       });
       A2.addEventListener("click", () => {
         playerA = A2.value;
+        currentPlayer = "B"
+        disableAbuttons()
         winnerTitle.textContent = "Player B It's Ur Turn";
       });
       A3.addEventListener("click", () => {
+        currentPlayer = "B"
         playerA = A3.value;
+        disableAbuttons()
         winnerTitle.textContent = "Player B It's Ur Turn";
       });
+
       B1.addEventListener("click", () => {
         playerB = B1.value;
+        currentPlayer = "A"
+        disableBbuttons()
         winnerTitle.textContent = "Check Winner";
       });
       B2.addEventListener("click", () => {
         playerB = B2.value;
+        currentPlayer = "A"
+        disableBbuttons()
         winnerTitle.textContent = "Check Winner";
       });
       B3.addEventListener("click", () => {
         playerB = B3.value;
+        currentPlayer = "A"
+        disableBbuttons()
         winnerTitle.textContent = "Check Winner";
       });
-    //   btn1.addEventListener("click", () => {
-    //     // playerA = Math.floor(Math.random()*options.length);
-    //     playerA = document.getElementById("inputA").value;
-    //     winnerTitle.textContent = "Player B It's Ur Turn";
-    //   });
-
-    //   // rock > scissor , scissor > paper, paper > rock
-    //   btn2.addEventListener("click", () => {
-    //     // playerB = Math.floor(Math.random()*options.length);
-    //     playerB = document.getElementById("inputB").value;
-    //     winnerTitle.textContent = "Check Winner";
-    //   });
 
       result.addEventListener("click", () => {
         if (playerA === playerB) {
           winnerTitle.textContent = "TIE TIE TIE";
         }
-        // } else if (
-        //   playerA !== "rock" ||
-        //   playerA !== "scissor" ||
-        //   playerA !== "paper"
-        // ) {
-        //   winnerTitle.textContent = "Invalid Choice by player A";
-        // } else if (
-        //   playerB !== "rock" ||
-        //   playerB != "scissor" ||
-        //   playerB !== "paper"
-        // ) {
-        //   winnerTitle.textContent = "Invalid Choice by player B";
-        // } 
         else 
         {
           if (
@@ -161,6 +155,24 @@
           winnerTitle.textContent = "Winner is: " + winner;
         }
       });
+      
+      document.getElementById("new").addEventListener("click", () => {
+        playerA = "";
+        playerB = "";
+        winner = "";
+        winnerTitle.textContent = "New Game";
+      })
+
+      function disableAbuttons() {
+        A1.classList.add('.disable');
+        A2.classList.add('.disable');
+        A3.classList.add('.disable');
+      }
+      function disableBbuttons() {
+        B1.classList.add('.disable');
+        B2.classList.add('.disable');
+        B3.classList.add('.disable');
+      }
     </script>
 </body>
 </html>
