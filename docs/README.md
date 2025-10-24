@@ -10,16 +10,17 @@ This repository contains **two versions**:
 
 ## 📝 Version Comparison
 
-| Feature | V1 (Random / Luck-based) | V2 (Secret Player Input) |
-|---------|--------------------------|--------------------------|
-| Player input | Randomly generated | Players enter manually |
-| Secret choices | Not needed | Yes, input is hidden from other player |
-| Winner logic | Based on random values | Based on player-entered choices |
-| Tie detection | ✔ | ✔ |
-| Input validation | Not needed | ✔ (prevents invalid spelling) |
-| UX | Quick, instant | Turn-based, sequential |
-| Improvements possible | Score tracking, animations | Buttons instead of text input, score tracking, animations |
-
+| Feature | V1 (Random / Luck-Based) | V2 (Secret Input) | V3 (Buttons) |
+|---------|--------------------------|------------------|--------------|
+| Player input | Randomly generated | Manual, hidden | Manual via buttons |
+| Secret choices | ❌ | ✔ | ✔ |
+| Input validation | ❌ | ✔ | ✔ (buttons prevent errors) |
+| Winner logic | Random comparison | Based on input | Based on input |
+| Tie detection | ✔ | ✔ | ✔ |
+| UX | Quick, instant | Turn-based, sequential | Turn-based, visual buttons |
+| Typing errors | ❌ | ❌ (validated) | ❌ (buttons eliminate errors) |
+| Potential glitch | ❌ | ❌ | Player can accidentally select only left buttons or first choice can leak to Player B |
+| Improvements | Score tracking, transitions | Buttons, animations | Fix turn enforcement, score, transitions |
 ---
 
 ## 🎮 Version 1 – Random/Luck-Based
@@ -53,6 +54,27 @@ This repository contains **two versions**:
 ### Notes
 - Inputs are **case-insensitive** and **trimmed** for safety.  
 - Optionally, **buttons/icons** can replace text input for full secrecy and to avoid typing errors.  
+
+---
+
+## 🎮 Version 3 – Buttons
+
+**Features**  
+- Replaces text input with **three clickable buttons** per player: Rock, Paper, Scissor.  
+- Buttons make input **instant and error-free**.  
+- Turn-based flow ensures Player B cannot see Player A’s choice.  
+- Smooth reset after each round using `setInterval()`.  
+
+**Potential Glitch**  
+- There’s a chance Player B can accidentally select the left buttons meant for Player A.  
+- Or the first choice may leak to Player B if turn enforcement is not strict.  
+- Can be fixed by **disabling buttons after each player clicks** until the next round.
+
+**How it works**  
+1. Player A clicks a button → choice stored, buttons disabled.  
+2. Player B clicks a button → choice stored, buttons disabled.  
+3. Winner is calculated and displayed.  
+4. Game auto-resets after ~3.6 seconds (`setInterval`).  
 
 ---
 
