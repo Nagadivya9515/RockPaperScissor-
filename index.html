@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissor</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
     <style>
-      body {
+        body {
         width: 25%;
         text-align: center;
         margin: 0 auto;
@@ -26,30 +19,9 @@
         /* align-items: center; */
         align-items: flex-start;
       }
-      #winnerTitle {
-        overflow: hidden;
-        max-height: 0;
-        opacity: 0;
-        transition: all 0.5s ease;
-      }
-
-      #winnerTitle.active {
-        opacity: 1;
-        max-height: 200px;
-      }
 
       .container h1 {
         font-size: 3rem;
-      }
-      i {
-        font-size: 48px;
-        display: inline-block;
-      }
-      #playerOne i {
-        color: red;
-      }
-      #playerTwo i {
-        color: blue;
       }
       button {
         display: block;
@@ -63,62 +35,118 @@
         font-size: 1.4rem;
         margin: 10px 0;
       }
+      .weapons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 5px;
+      }
+      .weapons button {
+        cursor: pointer;
+        font-size: 1rem;
+        text-align: center;
+        color: #fff;
+      }
+      .weapons button:first-child {
+        background-color: red;
+      }
+      .weapons button:nth-child(2) {
+        background-color: blue;
+      }
+      .weapons button:nth-child(3) {
+        background-color: green;
+      }
+      #A1.disable, #A2.disable, #A3.disable, #B1.disable, #B2.disable, #B3.disable {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: default;
+      }
     </style>
-  </head>
-  <body>
-    <!-- rock > scissor , scissor > paper, paper > rock -->
+</head>
+<body>
     <h1>Rock Paper Scissor</h1>
     <h2 id="winnerTitle"></h2>
     <div class="container">
-      <div id="playerOne">
-        <h2>Player A</h2>
-        <i class="fa-solid fa-user-secret"></i>
-        <button id="btn1">Grab</button>
-        <h3 id="card1"></h3>
-      </div>
-      <h1>Vs</h1>
-      <div id="playerTwo">
-        <h2>Player B</h2>
-        <i class="fa-solid fa-user-secret"></i>
-        <button id="btn2">Grab</button>
-        <h3 id="card2"></h3>
-      </div>
-    </div>
-    <script>
-      // let [rock,scissor, paper] = [0,0,0];
-      let winner = "";
-      let options = ["Rock", "Scissor", "Paper"];
-      let playerA;
-      let playerB;
-      let winnerTitle = document.getElementById("winnerTitle");
+        <div id="playerOne">
+            <h4>Player A</h4>
+            <div class="weapons">
+            <button id = "A1" value="rock">Rock</button><button id = "A2" value="scissor">Scissor</button><button id = "A3" value="paper">Paper</button>
+            </div>
+        </div>
 
-      let btn1 = document.getElementById("btn1");
-      let btn2 = document.getElementById("btn2");
+        <div id="playerTwo">
+            <h4>Player B</h4>
+            <div class="weapons">
+            <button id = "B1" value="rock">Rock</button><button id = "B2" value="scissor">Scissor</button><button id = "B3" value="paper">Paper</button>
+            </div>
+        </div>
+    </div>
+        <button id="result">Who's Winner?</button>
+        <button id="new">New Game</button>
+    <script>
+      let result = document.getElementById("result");
       let card1 = document.getElementById("card1");
       let card2 = document.getElementById("card2");
+      let winnerTitle = document.getElementById("winnerTitle");
+      winnerTitle.textContent = "Select Weapon Player A";
+      let playerA, playerB, winner;
+      let currentPlayer = "A";
 
-      btn1.addEventListener("click", () => {
-        playerA = Math.floor(Math.random() * options.length);
-        card1.textContent = options[playerA];
+      let A1 = document.getElementById("A1");
+      let A2 = document.getElementById("A2");
+      let A3 = document.getElementById("A3");
+      let B1 = document.getElementById("B1");
+      let B2 = document.getElementById("B2");
+      let B3 = document.getElementById("B3");
+
+      A1.addEventListener("click", () => {
+        playerA = A1.value;
+        currentPlayer = "B"
+        disableAbuttons()
+        winnerTitle.textContent = "Player B It's Ur Turn";
+      });
+      A2.addEventListener("click", () => {
+        playerA = A2.value;
+        currentPlayer = "B"
+        disableAbuttons()
+        winnerTitle.textContent = "Player B It's Ur Turn";
+      });
+      A3.addEventListener("click", () => {
+        currentPlayer = "B"
+        playerA = A3.value;
+        disableAbuttons()
+        winnerTitle.textContent = "Player B It's Ur Turn";
       });
 
-      btn2.addEventListener("click", () => {
-        playerB = Math.floor(Math.random() * options.length);
-        card2.textContent = options[playerB];
-        if (playerA == playerB) {
+      B1.addEventListener("click", () => {
+        playerB = B1.value;
+        currentPlayer = "A"
+        disableBbuttons()
+        winnerTitle.textContent = "Check Winner";
+      });
+      B2.addEventListener("click", () => {
+        playerB = B2.value;
+        currentPlayer = "A"
+        disableBbuttons()
+        winnerTitle.textContent = "Check Winner";
+      });
+      B3.addEventListener("click", () => {
+        playerB = B3.value;
+        currentPlayer = "A"
+        disableBbuttons()
+        winnerTitle.textContent = "Check Winner";
+      });
+
+      result.addEventListener("click", () => {
+        if (playerA === playerB) {
           winnerTitle.textContent = "TIE TIE TIE";
-        } 
-        else {
-          if ("Rock" === options[playerA] && "Scissor" === options[playerB]) {
-            winner = "A";
-          } else if (
-            "Scissor" === options[playerA] &&
-            "Paper" === options[playerB]
-          ) {
-            winner = "A";
-          } else if (
-            "Paper" === options[playerA] &&
-            "Rock" === options[playerB]
+        }
+        else 
+        {
+          if (
+            (playerA === "rock" && playerB === "scissor") ||
+            (playerA === "scissor" && playerB === "paper") ||
+            (playerA === "paper" && playerB === "rock")
           ) {
             winner = "A";
           } else {
@@ -126,19 +154,25 @@
           }
           winnerTitle.textContent = "Winner is: " + winner;
         }
-        
-        winnerTitle.classList.add("active");
       });
-
-      setInterval(() => {
-        playerA = 0;
-        playerB = 0;
+      
+      document.getElementById("new").addEventListener("click", () => {
+        playerA = "";
+        playerB = "";
         winner = "";
-        card1.textContent = "";
-        card2.textContent = "";
-        winnerTitle.textContent = "";
-        winnerTitle.classList.remove("active");
-      }, 3600);
+        winnerTitle.textContent = "New Game";
+      })
+
+      function disableAbuttons() {
+        A1.classList.add('.disable');
+        A2.classList.add('.disable');
+        A3.classList.add('.disable');
+      }
+      function disableBbuttons() {
+        B1.classList.add('.disable');
+        B2.classList.add('.disable');
+        B3.classList.add('.disable');
+      }
     </script>
-  </body>
+</body>
 </html>
