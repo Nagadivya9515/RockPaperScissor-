@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissor</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      body {
+        width: 25%;
+        text-align: center;
+        margin: 0 auto;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        /* align-items: center; */
+        align-items: flex-start;
+      }
+      #winnerTitle {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: all 0.5s ease;
+      }
+
+      #winnerTitle.active {
+        opacity: 1;
+        max-height: 200px;
+      }
+
+      .container h1 {
+        font-size: 3rem;
+      }
+      i {
+        font-size: 48px;
+        display: inline-block;
+      }
+      #playerOne i {
+        color: red;
+      }
+      #playerTwo i {
+        color: blue;
+      }
+      button {
+        display: block;
+        width: 100%;
+        background-color: rgb(255, 228, 95);
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-weight: bold;
+        font-size: 1.4rem;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- rock > scissor , scissor > paper, paper > rock -->
+    <h1>Rock Paper Scissor</h1>
+    <h2 id="winnerTitle"></h2>
+    <div class="container">
+      <div id="playerOne">
+        <h2>Player A</h2>
+        <i class="fa-solid fa-user-secret"></i>
+        <button id="btn1">Grab</button>
+        <h3 id="card1"></h3>
+      </div>
+      <h1>Vs</h1>
+      <div id="playerTwo">
+        <h2>Player B</h2>
+        <i class="fa-solid fa-user-secret"></i>
+        <button id="btn2">Grab</button>
+        <h3 id="card2"></h3>
+      </div>
+    </div>
+    <script>
+      // let [rock,scissor, paper] = [0,0,0];
+      let winner = "";
+      let options = ["Rock", "Scissor", "Paper"];
+      let playerA;
+      let playerB;
+      let winnerTitle = document.getElementById("winnerTitle");
+
+      let btn1 = document.getElementById("btn1");
+      let btn2 = document.getElementById("btn2");
+      let card1 = document.getElementById("card1");
+      let card2 = document.getElementById("card2");
+
+      btn1.addEventListener("click", () => {
+        playerA = Math.floor(Math.random() * options.length);
+        card1.textContent = options[playerA];
+      });
+
+      btn2.addEventListener("click", () => {
+        playerB = Math.floor(Math.random() * options.length);
+        card2.textContent = options[playerB];
+        if (playerA == playerB) {
+          winnerTitle.textContent = "TIE TIE TIE";
+        } 
+        else {
+          if ("Rock" === options[playerA] && "Scissor" === options[playerB]) {
+            winner = "A";
+          } else if (
+            "Scissor" === options[playerA] &&
+            "Paper" === options[playerB]
+          ) {
+            winner = "A";
+          } else if (
+            "Paper" === options[playerA] &&
+            "Rock" === options[playerB]
+          ) {
+            winner = "A";
+          } else {
+            winner = "B";
+          }
+          winnerTitle.textContent = "Winner is: " + winner;
+        }
+        
+        winnerTitle.classList.add("active");
+      });
+
+      setInterval(() => {
+        playerA = 0;
+        playerB = 0;
+        winner = "";
+        card1.textContent = "";
+        card2.textContent = "";
+        winnerTitle.textContent = "";
+        winnerTitle.classList.remove("active");
+      }, 3600);
+    </script>
+  </body>
+</html>
